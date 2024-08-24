@@ -1,4 +1,4 @@
-// Atividade1 para entregar até(19/08)
+// atividade 1 de icc2 para entregar até 19/08
 #include <stdio.h>
 #include <string.h>
 #include <math.h>
