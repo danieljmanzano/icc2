@@ -1,14 +1,14 @@
 // atividade 1 de icc2 para entregar até 19/08
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 #include <stdlib.h>
+#include <math.h>
 
 //Função para converter uma string em um float
 float strtofloat(char *string, int base){
     int size = strlen(string), ans=0;
     for(int i=0; i<size; i++){
-        ans += (string[i] - 48)*pow(base, size-i-1);
+        ans += (string[i] - 48) * pow(base, size-i-1);
     }
     return (float)ans;
 }
@@ -46,8 +46,7 @@ char *strsubst(char *string_in, char *searchStr, char *replaceStr){
             for(int a=0; a<i; a++){
                 strFinal[a] = string_in[a];
             }
-            for(int a=0; a
-            <strlen(replaceStr); a++){
+            for(int a=0; a<strlen(replaceStr); a++){
                 strFinal[i+a] = replaceStr[a];
             }
             if(strlen(strFinal) < newSize){
@@ -87,7 +86,8 @@ int main(){
         char a;
         a = getchar();
         if(a == '\n') break ;
-        str_rpc[i++] = a;}
+        str_rpc[i++] = a;
+    }
     str_rpc[i] = '\0';
     printf("%s\n", strsubst(str_in, str_srch, str_rpc));
 }   
