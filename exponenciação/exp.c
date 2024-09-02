@@ -63,8 +63,6 @@ int main(void){
     imprimeTempoDeExecucao(stop_timer(&timer));
 
     start_timer(&timer);
-    printf("divisao e conquista: %d\n", diveconqs(n, k));
+    printf("divisao e conquista: %d\n", diveconqs(n, k) % 10000);
     imprimeTempoDeExecucao(stop_timer(&timer));
-
-    printf("%d\n", diveconqs(n, k) % 10000);
 }
