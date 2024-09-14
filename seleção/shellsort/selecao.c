@@ -3,6 +3,11 @@
 #include <string.h>
 #include <time.h>
 
+/*exercicio de lab de icc2, temos que selecionar e ordenar informaçoes que vao passar*/
+/*no caso a gente vai receber um monte de nome de jogador cada um com um overall e temo que organizar isso aí*/
+/*vai sair a pontuação decrescente e pros que tiver ponto igual a gente coloca em ordem alfabetica*/
+/*a ideia era fazer dois algoritmo e comparar, um usandocd pilha (fernando fez, ta na outra pasta) e aqui eu uso o shellsort que é mais melhor de bom*/
+
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
     typedef struct{
