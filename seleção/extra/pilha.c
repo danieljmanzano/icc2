@@ -3,7 +3,7 @@
 #include "pilha.h"
 
 //TAD do daniel
-//deu certo ah mulek (mas acho que nem vai usar, fica aí de enfeite)
+//acabou que nao precisamo usar, vai ficar aqui de enfeite
 
 typedef struct jogador{
     char *nome;
