@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+//exercicio de lab de icc2. 
+//recebe um arquivo com nomes e notas de alunos. tenho que ver os k primeiros com maiores notas e printar
+//caso tenha mais de um na ultima posição (mesma nota do ultimo) printo mesmo assim só que organizando por ordem alfabetica
+
 typedef struct aluno_{
     char *nome; //string guarda o nome do aluno
     int aum; //guarda o aumento de nota
@@ -57,7 +61,7 @@ void shellsortchar(ALUNO *vet, int comeco, int fim){
     return;
 } 
 
-//função pra pegar as repetições de nota, uso pra depois deixar em ordem alfabetica
+//função pra pegar as repetições de nota, uso pra depois deixar os repetidos em ordem alfabetica
 int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a printar (se nao tiver repetiçao) e i é o numero de posições no vetor
     int cont = 0;
     
@@ -74,13 +78,14 @@ void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter
     for(int i = fim; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
         printf("%s\n", alunos[i].nome);
     }
+    return;
 }
 
 int main(void){ 
     ALUNO *alunos = malloc(sizeof(ALUNO));
     char *aux = malloc(sizeof(char) * 51); //vou usar pra ler os nomes
     int k, cont;
-    float n1, n2, n3; //eu nao uso o n2 mas preciso pra ler...
+    float n1, n2, n3; //eu nao uso o n2 mas preciso pra ler do arquivo
 
     char *nomearq = malloc(sizeof(char) * 51);
     scanf("%s ", nomearq);
@@ -96,9 +101,9 @@ int main(void){
         fscanf(fp, " %[^,]s", aux);
         fscanf(fp, "%f,%f,%f", &n1, &n2, &n3);
         alunos = realloc(alunos, sizeof(ALUNO) * (i + 1)); //pra colocar as novas informaçoes no vetor
-        alunos[i].nome = malloc(sizeof(char) * (strlen(aux) + 1));
-        strcpy(alunos[i].nome, aux);
-        alunos[i].aum = (int) n3 - n1;
+        alunos[i].nome = malloc(sizeof(char) * (strlen(aux) + 1)); //aloco o nome do tal aluno com o numero certo de caracteres
+        strcpy(alunos[i].nome, aux); //copio do aux pro novo endereço (que realmente vai ficar guardado)
+        alunos[i].aum = (int) (n3 - n1) * 10;
         i++;
     }
 
