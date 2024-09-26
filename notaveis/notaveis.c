@@ -43,7 +43,7 @@ void shellsortchar(ALUNO *vet, int comeco, int fim){
         for(int i = gap; i < tam; i++){
             aux = vet[i + comeco]; //sempre coloco a posiçao basica do shellsort de cima só que somando o comeco pra pegar a posiçao certa de vdd
             int j = i;
-            while(j >= gap && strcmp(vet[j - gap + comeco].nome, aux.nome) < 0){ 
+            while(j >= gap && strcmp(vet[j - gap + comeco].nome, aux.nome) > 0){ 
                 vet[j + comeco] = vet[j - gap + comeco];
                 j -= gap;
             }
@@ -69,15 +69,15 @@ int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a pr
 
 int buscaespecial(ALUNO *alunos, int i, int k, int cont){ //esse busca os que repetem com a ultima posição ainda dentro dos k primeiros (tbm tenho que organizar em ordem alfabetica)
 
-    int pos = 0; //vai retornar a posiçao em que começam (pensando de tras pra frente) as repetiçoes com a ultima posiçao
+    int cont2 = i - k - 1; //vai retornar a posiçao em que começam (pensando de tras pra frente) as repetiçoes com a ultima posiçao. por padrao volta a posicao inicial do bagulho
     for(int a = i - 1; a >= i - k; a--){
         if(alunos[i - k - 1].aum == alunos[a].aum){
-            pos = a;
+            cont2 = a;
             break;
         }
     }
 
-    return pos;
+    return cont2;
 }
 
 //só printa os nomes dos alunos
@@ -123,8 +123,8 @@ int main(void){
 
     quicksort(alunos, 0, i - 1); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
-    cont2 = buscaespecial(alunos, i, k, cont);
-    shellsortchar(alunos, i - k - cont, i - k + cont2 - 1); //organizo as repeticoes por ordem alfabetica
+    cont2 = buscaespecial(alunos, i, k, cont); //volta onde terminam as repetiçoes (ate onde tenho que deixar em ordem alfabetica)
+    shellsortchar(alunos, i - k - cont, cont2); //organizo as repeticoes por ordem alfabetica
     printa(alunos, k + cont, i); 
 
     return 0;
