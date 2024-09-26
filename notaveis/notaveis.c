@@ -43,7 +43,7 @@ void shellsortchar(ALUNO *vet, int comeco, int fim){
         for(int i = gap; i < tam; i++){
             aux = vet[i + comeco]; //sempre coloco a posiçao basica do shellsort de cima só que somando o comeco pra pegar a posiçao certa de vdd
             int j = i;
-            while(j >= gap && strcmp(vet[j - gap + comeco].nome, aux.nome) > 0){ 
+            while(j >= gap && strcmp(vet[j - gap + comeco].nome, aux.nome) < 0){ 
                 vet[j + comeco] = vet[j - gap + comeco];
                 j -= gap;
             }
@@ -80,6 +80,21 @@ int buscaespecial(ALUNO *alunos, int i, int k, int cont){ //esse busca os que re
     return cont2;
 }
 
+void buscarep(ALUNO *vet, int tam){ //funçao pra buscar repetiçoes de pontuaçao
+    int aux, comeco;
+    for(int i = tam/2; i < tam; i++){ //como preciso organizar so o que quero printar limitei pra começar a analise do meio do vetor e poupar algumas repetiçoes sem motivo
+        aux = vet[i].aum;
+        if(vet[i + 1].aum == aux){ //se o proximo do vetor tem mesma pontuaçao
+            comeco = i; //marco onde fica o primeiro com a pontuaçao que estou analisando
+            i++; 
+            while(vet[i + 1].aum == aux){ //enquanto o valor no vetor continuar o mesmo que eu guardei
+                i++; //incremento a cada um igual que encontro
+            }
+            shellsortchar(vet, comeco, i); //chamo o sort com o tanto certo de coisa que quero arrumar
+        }
+    }
+}
+
 //só printa os nomes dos alunos
 void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter que printar e o fim é o fim do meu vetor
     for(int i = fim - 1; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
@@ -91,7 +106,7 @@ void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter
 int main(void){ 
     ALUNO *alunos = malloc(sizeof(ALUNO));
     char *aux = malloc(sizeof(char) * 51); //vou usar pra ler os nomes
-    int k, cont, cont2;
+    int k, cont/*, cont2*/;
     float n1, n3;
 
     char *nomearq = malloc(sizeof(char) * 51);
@@ -123,8 +138,8 @@ int main(void){
 
     quicksort(alunos, 0, i - 1); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
-    cont2 = buscaespecial(alunos, i, k, cont); //volta onde terminam as repetiçoes (ate onde tenho que deixar em ordem alfabetica)
-    shellsortchar(alunos, i - k - cont, cont2); //organizo as repeticoes por ordem alfabetica
+    //cont2 = buscaespecial(alunos, i, k, cont); //volta onde terminam as repetiçoes (ate onde tenho que deixar em ordem alfabetica)
+    buscarep(alunos, i);
     printa(alunos, k + cont, i); 
 
     return 0;
