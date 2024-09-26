@@ -36,18 +36,18 @@ void quicksort(ALUNO *vet, int esq, int dir) { //vetor a ser ordenado, esquerda 
 
 //usei em outro exercicio. ordena por ordem lexicografica
 void shellsortchar(ALUNO *vet, int comeco, int fim){ 
-    ALUNO *aux = malloc(sizeof(ALUNO));
+    ALUNO aux;
     int tam = fim - comeco + 1; //coloco +1 pq a diferença sempre come 1
     int gap = tam/2; 
     while(gap > 0){
         for(int i = gap; i < tam; i++){
-            *aux = vet[i + comeco]; //sempre coloco a posiçao basica do shellsort de cima só que somando o comeco pra pegar a posiçao certa de vdd
+            aux = vet[i + comeco]; //sempre coloco a posiçao basica do shellsort de cima só que somando o comeco pra pegar a posiçao certa de vdd
             int j = i;
-            while(j >= gap && strcmp(vet[j - gap + comeco].nome, aux->nome) < 0){ 
+            while(j >= gap && strcmp(vet[j - gap + comeco].nome, aux.nome) < 0){ 
                 vet[j + comeco] = vet[j - gap + comeco];
                 j -= gap;
             }
-            vet[j + comeco] = *aux;
+            vet[j + comeco] = aux;
         }
         gap /= 2;
     }
@@ -58,8 +58,8 @@ void shellsortchar(ALUNO *vet, int comeco, int fim){
 //função pra pegar as repetições de nota, uso pra depois deixar os repetidos em ordem alfabetica
 int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a printar (se nao tiver repetiçao) e i é o numero de posições no vetor
     int cont = 0;
-    
-    for(int j = i - k + 1; j >= 0; j--){ //vou contar quantas notas iguais à do ultimo colocado eu tenho
+
+    for(int j = i - k - 1; j >= 0; j--){ //vou contar quantas notas iguais à do ultimo colocado eu tenho
         if(alunos[j].aum != alunos[j + 1].aum) break; //se nao repetiu a nota do ultimo eu saio
         else cont++; //se repetiu adiciono no contador 
     }
@@ -67,9 +67,23 @@ int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a pr
     return cont;
 }
 
+int buscaespecial(ALUNO *alunos, int i, int k, int cont){ //esse busca os que repetem com a ultima posição ainda dentro dos k primeiros (tbm tenho que organizar em ordem alfabetica)
+    if(!cont) return 0; //caso nao tenha nenhuma repetiçao normal ja saio daqui
+
+    int pos = 0; //vai retornar a posiçao em que começam (pensando de tras pra frente) as repetiçoes com a ultima posiçao
+    for(int a = i - 1; a >= i - k; a--){
+        if(alunos[i - k - 1].aum == alunos[a].aum){
+            pos = a;
+            break;
+        }
+    }
+
+    return pos;
+}
+
 //só printa os nomes dos alunos
 void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter que printar e o fim é o fim do meu vetor
-    for(int i = fim; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
+    for(int i = fim - 1; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
         printf("%s\n", alunos[i].nome);
     }
     return;
@@ -78,7 +92,7 @@ void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter
 int main(void){ 
     ALUNO *alunos = malloc(sizeof(ALUNO));
     char *aux = malloc(sizeof(char) * 51); //vou usar pra ler os nomes
-    int k, cont;
+    int k, cont, cont2;
     float n1, n3;
 
     char *nomearq = malloc(sizeof(char) * 51);
@@ -108,9 +122,10 @@ int main(void){
     fclose(fp);
     fp = NULL;
 
-    quicksort(alunos, 0, i); //arrumo pelas notas (pra pegar os melhores)
+    quicksort(alunos, 0, i - 1); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
-    shellsortchar(alunos, i - k - cont, i - k); //organizo as repeticoes por ordem alfabetica
+    cont2 = buscaespecial(alunos, i, k, cont);
+    shellsortchar(alunos, i - k - cont, i - k + cont2); //organizo as repeticoes por ordem alfabetica
     printa(alunos, k + cont, i); 
 
     return 0;
