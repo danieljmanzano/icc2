@@ -90,17 +90,17 @@ int main(void){
     FILE *fp = fopen(nomearq, "r");
     if(fp == NULL) exit (1);
 
-    char *stringpulaprimeiralinhadoarquivo = malloc(sizeof(char) * 52); //nome autoexplicativo
-    fscanf(fp, "%s\n", stringpulaprimeiralinhadoarquivo);
-    free(stringpulaprimeiralinhadoarquivo);
+    char *stringprimeiralinha = malloc(sizeof(char) * 52); //nome autoexplicativo. tenho que pular a primeira linha do arquivo, ela só serve pra isso
+    fscanf(fp, "%s\n", stringprimeiralinha);
+    free(stringprimeiralinha);
 
     int i = 0;
     while(!feof(fp)){ //leitura do arquivo. coloco tudo que preciso no vetor alunos
-        fscanf(fp, "%[^,],%f,%f,%f\n", aux, &n1, &n3, &n3);
+        fscanf(fp, "%[^,],%f,%f,%f\n", aux, &n1, &n3, &n3); //o certo seria ler aux, n1, n2, n3; mas como no fim nao uso o n2, le o n3 duas vez memo pra economizar variavel
         alunos = realloc(alunos, sizeof(ALUNO) * (i + 1)); //pra colocar as novas informaçoes no vetor
         alunos[i].nome = malloc(sizeof(char) * (strlen(aux) + 1)); //aloco o nome do tal aluno com o numero certo de caracteres
         strcpy(alunos[i].nome, aux); //copio do aux pro novo endereço (que realmente vai ficar guardado)
-        alunos[i].nome[strlen(aux)] = '\0'; //só pra colocar /0 no final do nome e nao dar problema depois
+        alunos[i].nome[strlen(aux)] = '\0'; //só pra colocar \0 no final do nome e nao dar problema depois
         alunos[i].aum = (int) ((n3 - n1) * 10);
         i++;
     }
