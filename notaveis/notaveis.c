@@ -11,33 +11,27 @@ typedef struct aluno_{
     int aum; //guarda o aumento de nota
 } ALUNO;
 
-//mergesort que eu fiz pra outra ocasiao, fiz as devidas alterações pra rodar com o tipo aluno
-void merge(ALUNO *v, int *v2, int i, int m, int f){
-    int z, i1 = i, i2 = m + 1; //auxiliares pro negocio dar bom
+//vou usar pra organizar por notas primeiro o vetor
+void quicksort(ALUNO *vet, int esq, int dir) { //vetor a ser ordenado, esquerda (começo) do vet, direita (fim) do vet
+    int i = esq, j = dir, x = vet[(esq + dir) / 2].aum; //auxiliares
+    ALUNO y;
 
-    for(z = i; z <= f; z++) v2[z] = v[z].aum; //copio o v em um v2 auxiliar
-    z = i;
-
-    while(i1 <= m && i2 <= f) { //enquanto o a primeira metade nao tiver sido inteiramente percorrida/arrumada && a segunda metade tambem nao
-        if(v2[i1] <= v2[i2]) v[z++].aum = v2[i1++]; //vai arrumando aí
-        else v[z++].aum = v2[i2++]; //aqui tambem
+    while(i <= j){ //paia de explicar, fica a cargo do leitor
+        while(vet[i].aum < x && i < dir) i++;
+        while(vet[j].aum > x && j > esq) j--;
+        if(i <= j){
+            y = vet[i];
+            vet[i] = vet[j];
+            vet[j] = y;
+            i++;
+            j--;
+        }
     }
-
-    while(i1 <= m) v[z++].aum = v2[i1++]; //poe a primeira metade organizada no v
-    while(i2 <= f) v[z++].aum = v2[i2++]; //poe a segunda metade organizada no v
-}
-
-void mergesort(ALUNO *v, int *v2, int i, int f){ //o v2 é só um auxiliar que vou usar pro merge, pode ignorar aqui por enquanto
-    if(i >= f) return;
-
-    int m = (i + f) / 2; //fico dividindo o vetor (obs.: funciona pra tamanhos impares tambem, nao precisa se preocupar)
-
-    mergesort(v, v2, i, m); //faço da metade pra tras
-    mergesort(v, v2, m + 1, f); //faço da metade pra frente
-
-    if(v[m].aum <= v[m + 1].aum) return; //se isso for vdd quer dizer que ta ordenado e pode vorta 
-
-    merge(v, v2, i, m, f); //como a função é recursiva só vai pegar depois de separar tudo 
+     
+    if(j > esq) quicksort(vet, esq, j);
+    if(i < dir) quicksort(vet, i, dir);
+    
+    return;
 }
 
 //usei em outro exercicio. ordena por ordem lexicografica
@@ -75,7 +69,7 @@ int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a pr
 
 //só printa os nomes dos alunos
 void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter que printar e o fim é o fim do meu vetor
-    for(int i = fim - 1; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
+    for(int i = fim; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
         printf("%s\n", alunos[i].nome);
     }
     return;
@@ -96,9 +90,9 @@ int main(void){
     FILE *fp = fopen(nomearq, "r");
     if(fp == NULL) exit (1);
 
-    char *stringpulaprimeiralinha = malloc(sizeof(char) * 52); //nome autoexplicativo
-    fscanf(fp, "%s\n", stringpulaprimeiralinha);
-    free(stringpulaprimeiralinha);
+    char *stringpulaprimeiralinhadoarquivo = malloc(sizeof(char) * 52); //nome autoexplicativo
+    fscanf(fp, "%s\n", stringpulaprimeiralinhadoarquivo);
+    free(stringpulaprimeiralinhadoarquivo);
 
     int i = 0;
     while(!feof(fp)){ //leitura do arquivo. coloco tudo que preciso no vetor alunos
@@ -114,11 +108,10 @@ int main(void){
     fclose(fp);
     fp = NULL;
 
-    int *v2 = malloc(sizeof(int) * i); //tenho que usar esse vetor pra auxiliar 
-    mergesort(alunos, v2, 0, i); //arrumo pelas notas (pra pegar os melhores)
+    quicksort(alunos, 0, i); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
-    shellsortchar(alunos, i - cont, i);
-    printa(alunos, k, i);
+    shellsortchar(alunos, i - k - cont, i - k); //organizo as repeticoes por ordem alfabetica
+    printa(alunos, k + cont, i); 
 
     return 0;
 }
