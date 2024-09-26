@@ -75,7 +75,7 @@ int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a pr
 
 //só printa os nomes dos alunos
 void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter que printar e o fim é o fim do meu vetor
-    for(int i = fim; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
+    for(int i = fim - 1; i >= fim - total; i--){ //como dexei organizado crescente tenho que printar "ao contrario"
         printf("%s\n", alunos[i].nome);
     }
     return;
@@ -85,7 +85,7 @@ int main(void){
     ALUNO *alunos = malloc(sizeof(ALUNO));
     char *aux = malloc(sizeof(char) * 51); //vou usar pra ler os nomes
     int k, cont;
-    float n1, n2, n3; //eu nao uso o n2 mas preciso pra ler do arquivo
+    float n1, n3;
 
     char *nomearq = malloc(sizeof(char) * 51);
     scanf("%s ", nomearq);
@@ -96,22 +96,29 @@ int main(void){
     FILE *fp = fopen(nomearq, "r");
     if(fp == NULL) exit (1);
 
+    char *stringpulaprimeiralinha = malloc(sizeof(char) * 52); //nome autoexplicativo
+    fscanf(fp, "%s\n", stringpulaprimeiralinha);
+    free(stringpulaprimeiralinha);
+
     int i = 0;
     while(!feof(fp)){ //leitura do arquivo. coloco tudo que preciso no vetor alunos
-        fscanf(fp, " %[^,]s", aux);
-        fscanf(fp, "%f,%f,%f", &n1, &n2, &n3);
+        fscanf(fp, "%[^,],%f,%f,%f\n", aux, &n1, &n3, &n3);
         alunos = realloc(alunos, sizeof(ALUNO) * (i + 1)); //pra colocar as novas informaçoes no vetor
         alunos[i].nome = malloc(sizeof(char) * (strlen(aux) + 1)); //aloco o nome do tal aluno com o numero certo de caracteres
         strcpy(alunos[i].nome, aux); //copio do aux pro novo endereço (que realmente vai ficar guardado)
-        alunos[i].aum = (int) (n3 - n1) * 10;
+        alunos[i].nome[strlen(aux)] = '\0'; //só pra colocar /0 no final do nome e nao dar problema depois
+        alunos[i].aum = (int) ((n3 - n1) * 10);
         i++;
     }
+
+    fclose(fp);
+    fp = NULL;
 
     int *v2 = malloc(sizeof(int) * i); //tenho que usar esse vetor pra auxiliar 
     mergesort(alunos, v2, 0, i); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
-    shellsortchar(alunos, i - cont, i); 
-    printa(alunos, k + cont, i);
+    shellsortchar(alunos, i - cont, i);
+    printa(alunos, k, i);
 
     return 0;
 }
