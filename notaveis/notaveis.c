@@ -68,7 +68,6 @@ int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a pr
 }
 
 int buscaespecial(ALUNO *alunos, int i, int k, int cont){ //esse busca os que repetem com a ultima posição ainda dentro dos k primeiros (tbm tenho que organizar em ordem alfabetica)
-    if(!cont) return 0; //caso nao tenha nenhuma repetiçao normal ja saio daqui
 
     int pos = 0; //vai retornar a posiçao em que começam (pensando de tras pra frente) as repetiçoes com a ultima posiçao
     for(int a = i - 1; a >= i - k; a--){
@@ -125,7 +124,7 @@ int main(void){
     quicksort(alunos, 0, i - 1); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
     cont2 = buscaespecial(alunos, i, k, cont);
-    shellsortchar(alunos, i - k - cont, i - k + cont2); //organizo as repeticoes por ordem alfabetica
+    shellsortchar(alunos, i - k - cont, i - k + cont2 - 1); //organizo as repeticoes por ordem alfabetica
     printa(alunos, k + cont, i); 
 
     return 0;
