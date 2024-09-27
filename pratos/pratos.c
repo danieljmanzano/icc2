@@ -5,6 +5,7 @@
 
 //exercicio do lab de icc2, vamos receber pratos (tempo de preparo, prioridade de preparo, nome) e temos que ordenar
 //primeiro usamos a prioridade como base, caso seja igual ordenamos por tempo (maior tempo primeiro)
+//pra ordenar temos que comparar quicksort com bubblesort
 
 
 /*daqui pra baixo é pra funcionar o timer*/

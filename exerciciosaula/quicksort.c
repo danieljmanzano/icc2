@@ -25,17 +25,13 @@ void quicksort(int *vet, int esq, int dir) { //vetor a ser ordenado, esquerda (c
 }
 
 int main(void){
-    int *vet = malloc(sizeof(int) * 11); //vetor de tamanho 11
+    int n; //tamanho do vetor
+    scanf("%d", &n);
+    int *vet = malloc(sizeof(int) * n);
 
-    for(int i = 0; i < 11; i++){ 
-        scanf(" %d", &vet[i]);
-    }
-
-    quicksort(vet, 0, 10);
+    for(int i = 0; i < n; i++) scanf(" %d", &vet[i]); //numeros do vetor
+    quicksort(vet, 0, n - 1); //tome
+    for(int i = 0; i < n; i++) printf("%d ", vet[i]); //printa
     
-    for(int i = 0; i < 11; i++){
-        printf("%d ", vet[i]);
-    }
-
     return 0;
 }

@@ -49,7 +49,7 @@ bool calc(int num[], int pos, int res){
     }
 
     return calc(num, pos + 1, res + num[pos]) || calc(num, pos + 1, res - num[pos]) || calc(num, pos + 1, res * num[pos + 1]);
-} //pra eu entender : analisa todas as combinaçoes possiveis entre os numeros recebidos com as operaçoes possiveis entre eles (a ordem dos numeros nao muda alias, só as operaçoes)
+} //pra eu entender : analisa todas as combinaçoes possiveis entre os numeros recebidos com as operaçoes possiveis entre eles 
 
 bool permuta(int num[], int ini){
     if (ini == 5){
