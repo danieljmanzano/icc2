@@ -93,7 +93,7 @@ void printa(ALUNO *alunos, int total, int fim){ //o total me diz quantos vou ter
 int main(void){ 
     ALUNO *alunos = malloc(sizeof(ALUNO));
     char *aux = malloc(sizeof(char) * 51); //vou usar pra ler os nomes
-    int k, cont/*, cont2*/;
+    int k, cont;
     float n1, n3;
 
     char *nomearq = malloc(sizeof(char) * 51);
