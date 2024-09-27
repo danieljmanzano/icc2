@@ -55,7 +55,7 @@ void shellsortchar(ALUNO *vet, int comeco, int fim){
     return;
 } 
 
-//função pra pegar as repetições de nota, uso pra depois deixar os repetidos em ordem alfabetica
+//função pra pegar as repetições de nota depois dos k primeiros
 int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a printar (se nao tiver repetiçao) e i é o numero de posições no vetor
     int cont = 0;
 
@@ -67,22 +67,9 @@ int busca(ALUNO *alunos, int k, int i){ //k é o numero de alunos que tenho a pr
     return cont;
 }
 
-int buscaespecial(ALUNO *alunos, int i, int k, int cont){ //esse busca os que repetem com a ultima posição ainda dentro dos k primeiros (tbm tenho que organizar em ordem alfabetica)
-
-    int cont2 = i - k - 1; //vai retornar a posiçao em que começam (pensando de tras pra frente) as repetiçoes com a ultima posiçao. por padrao volta a posicao inicial do bagulho
-    for(int a = i - 1; a >= i - k; a--){
-        if(alunos[i - k - 1].aum == alunos[a].aum){
-            cont2 = a;
-            break;
-        }
-    }
-
-    return cont2;
-}
-
-void buscarep(ALUNO *vet, int tam){ //funçao pra buscar repetiçoes de pontuaçao
+void buscarep(ALUNO *vet, int tam, int cont){ //funçao pra buscar repetiçoes de pontuaçao
     int aux, comeco;
-    for(int i = tam/2; i < tam; i++){ //como preciso organizar so o que quero printar limitei pra começar a analise do meio do vetor e poupar algumas repetiçoes sem motivo
+    for(int i = tam - cont - 12; i < tam; i++){ //esse -12 é só pra dar uma margem de erro 
         aux = vet[i].aum;
         if(vet[i + 1].aum == aux){ //se o proximo do vetor tem mesma pontuaçao
             comeco = i; //marco onde fica o primeiro com a pontuaçao que estou analisando
@@ -138,8 +125,7 @@ int main(void){
 
     quicksort(alunos, 0, i - 1); //arrumo pelas notas (pra pegar os melhores)
     cont = busca(alunos, k, i); //esse cont me diz quantas repetições de nota vou ter
-    //cont2 = buscaespecial(alunos, i, k, cont); //volta onde terminam as repetiçoes (ate onde tenho que deixar em ordem alfabetica)
-    buscarep(alunos, i);
+    buscarep(alunos, i, cont); //acho repetiçoes (incluindo nos k primeiros) e arrumo
     printa(alunos, k + cont, i); 
 
     return 0;
