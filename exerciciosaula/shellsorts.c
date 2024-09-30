@@ -68,7 +68,7 @@ void shellsorthibbard(int *vet, int n){ //algoritmo com a sequencia de hibbard (
 }
 
 void shellsortknuth(int *vet, int tam){ //algoritmo com a sequencia de knuth (h = (3^k - 1) / 2)
-    printf("algoritmo do shellsort com a sequencia de knuth:\n"); //mesma coisa do printf de cima
+    printf("algoritmo do shellsort com a sequencia de knuth:\n"); 
     int gap = 1;
  
     while(gap < tam){
