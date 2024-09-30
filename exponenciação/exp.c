@@ -7,7 +7,7 @@
 
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
-    typedef struct{
+typedef struct{
     clock_t start;
     clock_t end;
 }Timer;
