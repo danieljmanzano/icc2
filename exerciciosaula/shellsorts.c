@@ -4,6 +4,12 @@
 
 //exercicio pra comparar diferentes implementaçoes do shellsort (diferentes formas de escolher os "gaps" do algoritmo)
 
+//função para gerar um numero aleatorio (para os casos teste)
+void gerarvetor(int *vet, int n){
+    for(int i = 0; i < n; i++) vet[i] = rand() % 100000;
+    return;
+}
+
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
 typedef struct{
@@ -23,13 +29,13 @@ double stop_timer(Timer *timer){
 }
 
 void imprimeTempoDeExecucao(double tempo){
-    printf("\ntempo de execução: %f segundos\n", tempo);
+    printf("tempo de execução: %f segundos\n", tempo);
 }
 /*daqui pra frente é o codigo de vdd*/
 
 
 void shellsort(int *vet, int tam){ //algoritmo original (h = n/2^k)
-    printf("algoritmo do shellsort original:\n"); //esse printf é só pra funcionar pelo jeito que to chamando na main mesmo
+    printf("algoritmo do shellsort original\n"); //esse printf é só pra funcionar pelo jeito que to chamando na main mesmo
     int aux, gap = tam/2;
 
     while(gap > 0){
@@ -49,7 +55,7 @@ void shellsort(int *vet, int tam){ //algoritmo original (h = n/2^k)
 }
 
 void shellsorthibbard(int *vet, int n){ //algoritmo com a sequencia de hibbard (h = 2^k - 1)
-    printf("algoritmo do shellsort com a sequencia de hibbard:\n");
+    printf("algoritmo do shellsort com a sequencia de hibbard\n");
     int gap;
     for(gap = 1; gap < n; gap = gap * 2 + 1);  //gera gaps como 1, 3, 7, 15, ...
     
@@ -68,7 +74,7 @@ void shellsorthibbard(int *vet, int n){ //algoritmo com a sequencia de hibbard (
 }
 
 void shellsortknuth(int *vet, int tam){ //algoritmo com a sequencia de knuth (h = (3^k - 1) / 2)
-    printf("algoritmo do shellsort com a sequencia de knuth:\n"); 
+    printf("algoritmo do shellsort com a sequencia de knuth\n"); 
     int gap = 1;
  
     while(gap < tam){
@@ -93,7 +99,7 @@ void shellsortknuth(int *vet, int tam){ //algoritmo com a sequencia de knuth (h 
 }
 
 void shellsortsedgewick(int *vet, int n){ //algoritmo com a sequencia de sedgewick
-    printf("algoritmo do shellsort com a sequencia de sedgewick:\n"); 
+    printf("algoritmo do shellsort com a sequencia de sedgewick\n"); 
     int gaps[] = {1, 5, 19, 41, 109, 209, 505, 929, 2309, 4621}; //gaps selecionados na mão pq o algoritmo pra achar eles é embaçado demais
     int size = sizeof(gaps) / sizeof(gaps[0]);
     
@@ -116,7 +122,7 @@ void shellsortsedgewick(int *vet, int n){ //algoritmo com a sequencia de sedgewi
 }
 
 void shellsortgonnet(int *vet, int n){ //algoritmo com a sequencia de gonnet e baeza-yates
-    printf("algoritmo do shellsort com a sequencia de gonnet e baeza-yates:\n"); 
+    printf("algoritmo do shellsort com a sequencia de gonnet e baeza-yates\n"); 
     int gaps[] = {1, 4, 10, 23, 57, 132, 301, 701, 1750, 4299}; //gaps selecionados na mão pelo mesmo motivo da sequencia de sedgewick
     int size = sizeof(gaps) / sizeof(gaps[0]);
 
@@ -146,19 +152,16 @@ int main(void){
     int tam;
     scanf("%d", &tam);
     int *vet = malloc(sizeof(int) * tam);
+    gerarvetor(vet, tam);
 
-    for(int i = 0; i < tam; i++) scanf(" %d", &vet[i]);
-
-    printf("vetor antes da ordenação:\n");
-    printa(vet, tam);
-    printf("\nvetor depois da ordenação por ");
+    printf("numero de casos: %d\n", tam);
     start_timer(&timer);
-    /*shellsorthibbard(vet, tam);
-    shellsort(vet, tam);
-    shellsortsedgewick(vet, tam);
-    shellsortknuth(vet, tam);
-    shellsortgonnet(vet, tam);*/ //aqui ce tira do comentario o que quer testar (ta geral funcionando ok)
-    printa(vet, tam);
+    //shellsorthibbard(vet, tam);
+    //shellsort(vet, tam);
+    //shellsortsedgewick(vet, tam);
+    //shellsortknuth(vet, tam);
+    //shellsortgonnet(vet, tam); //aqui ce tira do comentario o que quer testar (ta geral funcionando ok)
+    //printa(vet, tam);
     imprimeTempoDeExecucao(stop_timer(&timer));
 
     return 0;
