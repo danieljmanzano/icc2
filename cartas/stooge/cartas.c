@@ -27,47 +27,39 @@ int buscaemseq(int seq[], int chave){ //função que busca a posição da chave 
     exit (1); //caso nao tenha achado nao tem o que fazer, dou exit pq tem algo errado
 }
 
-void stoogesortnaipe(carta *vet, int i, int j){ //vai valer pra ordenar primeiro os naipes
-    int k;
-    carta temp;           
-
-    if(buscanaipe(vet[i].naipe) > buscanaipe(vet[j].naipe)){ //se o naipe de vet[i] é maior que de vet[j], tenho que inverter
-        temp = vet[i];
-        vet[i] = vet[j];
-        vet[j] = temp;
-    }
-
-    if((i + 1) >= j) return;
-
-    k = (int)((j - i + 1) / 3);
-
-    stoogesortnaipe(vet, i, j - k);
-    stoogesortnaipe(vet, i + k, j);
-    stoogesortnaipe(vet, i, j - k);
+void swap(carta *a, carta *b){
+    carta temp = *a;
+    *a = *b;
+    *b = temp;
+    return;
 }
 
-void stoogesortnum(carta *vet, int i, int j, int seq[], int dig, int n){ //dig é qual a posição do digito que to analisando (tem que ser um digito de cada vez, ent vou chamar dps pros outros talvez)
-    if(dig == -1) return stoogesortnaipe(vet, 0 , n - 1); //caso base, quando bate o digito -1 quer dizer que ordenei todos e agora tem que ser por naipe
+void stoogesortnum(carta *vet, int i, int j, int seq[], int tam, int n){    
+    int k, flag = 0;
     
-    int k;
-    carta temp;
-
-    int veti = buscaemseq(seq, vet[i].num[dig]); //busca a posição do digito do numero do vet[i] no vetor seq 
-    int vetj = buscaemseq(seq, vet[j].num[dig]); //mesma coisa de cima
-    if(veti > vetj){
-        temp = vet[i];
-        vet[i] = vet[j];
-        vet[j] = temp;
+    if(buscaemseq(seq, vet[i].num[0]) > buscaemseq(seq, vet[j].num[0]))
+        swap(&vet[i], &vet[j]);
+    else{
+        for(int k = 1; k < tam; k++){ //vou analisar todos os digitos do numero da carta
+            if(buscaemseq(seq, vet[i].num[k]) > buscaemseq(seq, vet[j].num[k])){
+                swap(&vet[i], &vet[j]);
+                flag = 1; //essa é pra ver se vou ter q analisar o naipe dps
+                break;
+            }
+        }
+        if(!flag){ //essa é pra se o numero foi todo igual e tenho que analisar o naipe
+            if(buscanaipe(vet[i].naipe) > buscanaipe(vet[j].naipe))
+                swap(&vet[i], &vet[j]);
+        }
     }
 
     if((i + 1) >= j) return;
 
     k = (int)((j - i + 1) / 3);
 
-    stoogesortnum(vet, i, j - k, seq, dig, n);
-    stoogesortnum(vet, i + k, j, seq, dig, n);
-    stoogesortnum(vet, i, j - k, seq, dig, n);
-    stoogesortnum(vet, i, j, seq, dig - 1, n); //quando faço o sort com o tanto de digito atual, chamo denovo pro proximo digito
+    stoogesortnum(vet, i, j - k, seq, tam, n);
+    stoogesortnum(vet, i + k, j, seq, tam, n);
+    stoogesortnum(vet, i, j - k, seq, tam, n);
 }
 
 void printa(carta *vet, int n){
