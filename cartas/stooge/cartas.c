@@ -62,7 +62,7 @@ int comparacarta(carta *vet, int i, int j, int seq[], int tam){ //aqui vou ver s
     if(buscanaipe(vet[i].naipe) > buscanaipe(vet[j].naipe)) return 1;
     else if(buscanaipe(vet[i].naipe) < buscanaipe(vet[j].naipe)) return 0;
 
-    for(int cont = 0; cont <= tam; cont++){ //esse for é pra ver dentre os numeros se eu preciso trocar os numeros ou nao
+    for(int cont = 0; cont <= tam; cont++){ //esse for é pra ver dentre os numeros se eu preciso trocar ou nao
         if(buscaemseq(seq, vet[i].num[cont]) > buscaemseq(seq, vet[j].num[cont])) //se for menor troca
             return 1;
         else if(buscaemseq(seq, vet[i].num[cont]) < buscaemseq(seq, vet[j].num[cont])) //se for maior nao
