@@ -34,6 +34,19 @@ typedef struct{ //como as cartas vão ser organizadas com base no numero e vou p
     int num, pos;
 }carta;
 
+void gerarvetor(carta *vet, int n){ //como ta paia de receber entrada por algum motivo vou gerar aleatorio
+    for(int i = 0; i < n; i++){
+        vet[i].num = rand() % 100000;
+        vet[i].pos = i;
+    }
+    return;
+}
+
+int numerodovetor(carta *vet, int quant){ //isso aq pega um numero aleatorio de dentro do vetor
+    int n = (rand() % quant) - 1;
+    return vet[n].num;
+}
+
 void quicksort(carta *vet, int esq, int dir) { 
     int i = esq, j = dir, x = vet[(esq + dir) / 2].num; 
     carta y;
@@ -111,19 +124,21 @@ int main(void){
     int quant, n; //quantidade de cartas, numero da carta danificada
     scanf("%d %d", &quant, &n);
     carta *vet = malloc(sizeof(carta) * quant); //vetor que guarda as cartas
-    for(int i = 0; i < quant; i++){
+    /*for(int i = 0; i < quant; i++){
         scanf("%d", &vet[i].num);
         vet[i].pos = i;
-    }
+    }*/
+    gerarvetor(vet, quant);
+    n = numerodovetor(vet, quant);
 
     printf("numero de entradas: %d\n", quant);
 
     /*-----testando busca linear-----*/
-    /*carta *vet2 = copiavetor(vet, quant);
+    carta *vet2 = copiavetor(vet, quant);
     start_timer(&timer1);
     printf("execução de busca linear: %d\n", (buscalinear(vet2, n, quant) + 1));
     imprimeTempoDeExecucao(stop_timer(&timer1));
-    free(vet2);*/
+    free(vet2);
 
     /*-----testando ordenação e busca binária------*/
     start_timer(&timer2);
@@ -139,7 +154,7 @@ int main(void){
         imprimeTempoDeExecucao(stop_timer(&timer2));
         free(vet);
         return 0;
-    }    
+    } 
     
     printf("execução de busca binária: %d\n", antigapos + 1); //esse aqui é pra caso nao tenha achado nenhuma repetição, só printa normal a posição original da carta
     imprimeTempoDeExecucao(stop_timer(&timer2));
