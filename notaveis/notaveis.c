@@ -128,5 +128,6 @@ int main(void){
     buscarep(alunos, i, cont); //acho repetiçoes (incluindo nos k primeiros) e arrumo
     printa(alunos, k + cont, i); 
 
+    free(alunos);
     return 0;
 }

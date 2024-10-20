@@ -38,6 +38,8 @@ int main(void){
 
     str2 = strcpy(tam, str1);
     
+    free(str1);
+    free(str2);
     printf("\nstring copiada : %s", str2);
 }
 //funcionando show de bola

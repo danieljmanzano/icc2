@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-//exercicio de lab de icc2
-//tenho um vetor de cartas (são só numeros alias, uso a struct pra facilitar) desorganizado e quero achar uma especifica. pra isso, organizo o vetor e faço uma busca binaria nele
+//feito pelo daniel
+//exercicio de lab de icc2. tenho um vetor de cartas (são só numeros alias, uso a struct pra facilitar) desorganizado e quero achar uma especifica. pra isso, organizo o vetor e faço uma busca binaria nele
 //depois, tenho que retornar a posição "antiga" da carta no vetor. caso tenha repetição do numero, tenho que printar a primeira ocorrencia dele no vetor original
 //faço esse algoritmo usando quicksort/busca binaria e busca linear simples, aí comparo qual se sai melhor
 
@@ -122,9 +122,9 @@ carta *copiavetor(carta *vet, int tam){
 int main(void){
     Timer timer1, timer2;
     int quant, n; //quantidade de cartas, numero da carta danificada
-    scanf("%d %d", &quant, &n);
+    scanf("%d", &quant);
     carta *vet = malloc(sizeof(carta) * quant); //vetor que guarda as cartas
-    /*for(int i = 0; i < quant; i++){
+    /*for(int i = 0; i < quant; i++){ //esse for é pra se quiser fazer a entrada na mao
         scanf("%d", &vet[i].num);
         vet[i].pos = i;
     }*/

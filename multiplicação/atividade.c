@@ -4,7 +4,7 @@
 #include <string.h>
 #include "operacoes.h"
 
-//para o registro: esse é um exercicio de lab de icc2
+//exercicio de lab de icc2
 //temos que fazer duas funções para multiplicar strings numericas (uma usando multiplicaçao normal e a outra usando o algoritmo de karatsuba)
 //pra analisar as diferenças a gente usa esses negocio de medir o tempo e etc., mas o karatsuba que era pra ser mais rapido ta sendo mais lento pela alocaçao de memoria exagerada rsrs
 
@@ -57,4 +57,8 @@ int main(void){
     start_timer(&timer);
     printf("\nkaratsuba: %s\n", karatsuba(str1, str2));
     imprimeTempoDeExecucao(stop_timer(&timer));
+
+    free(str1);
+    free(str2);
+    return 0;
 }

@@ -184,6 +184,7 @@ int main(void){
     printf("execuçao do bubblesort:");
     imprimeTempoDeExecucao(stop_timer(&timer));
     
+    free(vet);
     return 0;
 }
 

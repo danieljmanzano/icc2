@@ -208,5 +208,7 @@ int main(void){
     
     //printa(vet2, n); //depois escolhe se quer printar aq e tira o bagulho do comentario pra ver
 
+    free(vet);
+    free(vet2);
     return 0;
 }

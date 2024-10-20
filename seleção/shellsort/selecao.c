@@ -130,6 +130,7 @@ int main(void){
 
     printf("seleção com shellsort\n");
     imprimeTempoDeExecucao(stop_timer(&timer));
-    return 0;
 
+    free(jogadores);
+    return 0;
 }

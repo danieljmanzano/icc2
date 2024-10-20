@@ -128,5 +128,7 @@ int main(void){
     printf("execução do mergesort: ");
     imprimeTempoDeExecucao(stop_timer(&timer2));
 
+    free(vet);
+    free(vet2);
     return 0;
 }

@@ -31,5 +31,6 @@ int main(void){
     if(compara(alfabeto, vet, m) == 2 || !compara(alfabeto, vet, m)) printf("1\n");
     else printf("0\n");
 
+    free(vet);
     return 0;
 }

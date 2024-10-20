@@ -164,5 +164,6 @@ int main(void){
     //printa(vet, tam);
     imprimeTempoDeExecucao(stop_timer(&timer));
 
+    free(vet);
     return 0;
 }

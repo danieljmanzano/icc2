@@ -50,5 +50,7 @@ int main(void){
     printf("seu vetor ordenado por mergesort:");
     for(int i = 0; i < tam; i++) printf("%d ", vet[i]);
 
+    free(vet);
+    free(vet2);
     return 0; 
 }

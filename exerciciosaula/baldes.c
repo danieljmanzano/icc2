@@ -95,5 +95,6 @@ int main(void){
     for(int i = 0; i < quant; i++) scanf(" %d", &vet[i]);
     contaeprinta(vet, quant, 1);
     
+    free(vet);
     return 0;
 }

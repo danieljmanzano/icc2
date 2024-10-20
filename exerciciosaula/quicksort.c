@@ -33,5 +33,6 @@ int main(void){
     quicksort(vet, 0, n - 1); //tome
     for(int i = 0; i < n; i++) printf("%d ", vet[i]); //printa
     
+    free(vet);
     return 0;
 }

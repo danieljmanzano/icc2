@@ -87,6 +87,8 @@ int main(void){
     int pos = buscaBinInsercRec(vet, 0, tam - 1, n);
     printf("seu vetor final: ");
     insereEprinta(vet, tam, pos, n);
+
+    free(vet);
     return 0;
 }
 
