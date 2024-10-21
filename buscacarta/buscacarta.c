@@ -5,7 +5,7 @@
 //feito pelo daniel
 //exercicio de lab de icc2. tenho um vetor de cartas (são só numeros alias, uso a struct pra facilitar) desorganizado e quero achar uma especifica. pra isso, organizo o vetor e faço uma busca binaria nele
 //depois, tenho que retornar a posição "antiga" da carta no vetor. caso tenha repetição do numero, tenho que printar a primeira ocorrencia dele no vetor original
-//faço esse algoritmo usando quicksort/busca binaria e busca linear simples, aí comparo qual se sai melhor
+//faço esse algoritmo usando quicksort/busca binaria e busca linear simples, aí comparo qual se sai melhor. como extra peguei o radix do fernando e comparei tb
 
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
@@ -34,12 +34,14 @@ typedef struct{ //como as cartas vão ser organizadas com base no numero e vou p
     int num, pos;
 }carta;
 
-void gerarvetor(carta *vet, int n){ //como ta paia de receber entrada por algum motivo vou gerar aleatorio
+int gerarvetor(carta *vet, int n){ //como ta paia de receber entrada por algum motivo vou gerar aleatorio (retorna o maior pra funcionar o radix)
+    int maior = 0;
     for(int i = 0; i < n; i++){
         vet[i].num = rand() % 100000;
         vet[i].pos = i;
+        if(vet[i].num > maior) maior = vet[i].num;
     }
-    return;
+    return maior;
 }
 
 int numerodovetor(carta *vet, int quant){ //isso aq pega um numero aleatorio de dentro do vetor
@@ -109,6 +111,26 @@ int buscalinear(carta *vet, int busca, int tam){ //busca linear básica para com
     return -1; //caso não ache
 }
 
+void radixSort(int numberOfCards, carta *cards, int biggestNumber) { //feito pelo fernando, nao irei comentar
+  for (int dig = 1; biggestNumber / dig > 0; dig *= 10) {
+    carta array_auxiliar[numberOfCards];
+    int i, contador[10] = {0};
+    for (i = 0; i < numberOfCards; i++) {
+      contador[(cards[i].num / dig) % 10]++;
+    }
+    for (i = 1; i < 10; i++)
+      contador[i] += contador[i - 1];
+    for (i = numberOfCards - 1; i >= 0; i--) {
+      array_auxiliar[contador[(cards[i].num / dig) % 10] - 1] = cards[i];
+      contador[(cards[i].num / dig % 10)]--;
+    }
+    for (i = 0; i < numberOfCards; i++) {
+      cards[i] = array_auxiliar[i];
+    }
+  }
+  return;
+}
+
 carta *copiavetor(carta *vet, int tam){
     carta *vet2 = malloc(sizeof(carta) * tam);
     for(int i = 0; i < tam; i++){
@@ -120,7 +142,7 @@ carta *copiavetor(carta *vet, int tam){
 }
 
 int main(void){
-    Timer timer1, timer2;
+    Timer timer1, timer2, timer3;
     int quant, n; //quantidade de cartas, numero da carta danificada
     scanf("%d", &quant);
     carta *vet = malloc(sizeof(carta) * quant); //vetor que guarda as cartas
@@ -128,7 +150,7 @@ int main(void){
         scanf("%d", &vet[i].num);
         vet[i].pos = i;
     }*/
-    gerarvetor(vet, quant);
+    int max = gerarvetor(vet, quant);
     n = numerodovetor(vet, quant);
 
     printf("numero de entradas: %d\n", quant);
@@ -140,23 +162,32 @@ int main(void){
     imprimeTempoDeExecucao(stop_timer(&timer1));
     free(vet2);
 
-    /*-----testando ordenação e busca binária------*/
+    /*-----testando radix e busca binária-----*/
+    carta *vet3 = copiavetor(vet, quant);
+    start_timer(&timer3);
+    radixSort(quant, vet3, max);
+    int pos = buscabin(vet3, 0, quant - 1, n);
+    printf("execução de busca binária (com radix): %d\n", (vet3[pos].pos + 1));
+    imprimeTempoDeExecucao(stop_timer(&timer3));
+    free(vet3);
+
+    /*-----testando quicksort e busca binária------*/
     start_timer(&timer2);
     quicksort(vet, 0, quant - 1);
 
-    int pos = buscabin(vet, 0, quant - 1, n); //pego a nova posição da carta no vetor (depois de organizar)
+    pos = buscabin(vet, 0, quant - 1, n); //pego a nova posição da carta no vetor (depois de organizar)
     int antigapos = vet[pos].pos; //pego a posição original da carta no vetor (antes de organizar)
 
     //aqui embaixo tento ver se meu numero repete (pelo menos uma vez) no vetor, aí tento achar qual a primeira ocorrencia do numero no vetor original
     if((pos != 0) && ((vet[pos - 1].num == vet[pos].num) || (vet[pos + 1].num == vet[pos].num))){ 
         pos = achaprimeiro(vet, pos, quant, antigapos);
-        printf("execução de busca binária: %d\n", pos + 1);
+        printf("execução de busca binária (com qsort): %d\n", pos + 1);
         imprimeTempoDeExecucao(stop_timer(&timer2));
         free(vet);
         return 0;
     } 
     
-    printf("execução de busca binária: %d\n", antigapos + 1); //esse aqui é pra caso nao tenha achado nenhuma repetição, só printa normal a posição original da carta
+    printf("execução de busca binária (com qsort): %d\n", antigapos + 1); //esse aqui é pra caso nao tenha achado nenhuma repetição, só printa normal a posição original da carta
     imprimeTempoDeExecucao(stop_timer(&timer2));
     free(vet);
     return 0;

@@ -2,8 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-//feito pelo fernando mas acabei colocando uns par de coisa ai dentro pra poder comparar pro relatorio, aí fica uma poluição visual de escrita diferente (peço desculpas)
-
+//feito pelo fernando
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
 typedef struct {
@@ -30,19 +29,6 @@ void imprimeTempoDeExecucao(double tempo){
 typedef struct carta_ {
   int value, index;
 } Carta;
-
-void gerarvetor(Carta *vet, int n){ //como ta paia de receber entrada por algum motivo vou gerar aleatorio
-    for(int i = 0; i < n; i++){
-        vet[i].value = rand() % 100000;
-        vet[i].index = i;
-    }
-    return;
-}
-
-int numerodovetor(Carta *vet, int quant){ //isso aq pega um numero aleatorio de dentro do vetor
-    int n = (rand() % quant) - 1;
-    return vet[n].value;
-}
 
 int binarySearch(Carta *cards, int target, int arraySize) {
   int left = 0, right = arraySize - 1;
@@ -81,16 +67,15 @@ int main(void) {
   int numberOfCards, target, max = 0;
   scanf(" %d %d", &numberOfCards, &target);
   Carta *cards = (Carta *)malloc(sizeof(Carta) * numberOfCards);
-  /*for (int i = 0; i < numberOfCards; i++) {
+  for (int i = 0; i < numberOfCards; i++) {
     Carta carta;
     carta.index = i;
     scanf(" %d", &carta.value);
     cards[i] = carta;
     if (carta.value > max)
       max = carta.value;
-  }*/
-  gerarvetor(cards, numberOfCards);
-  target = numerodovetor(cards, numberOfCards);
+  }
+
   start_timer(&timer);
   radixSort(numberOfCards, cards, max);
   printf("numero de entradas: %d\n", numberOfCards);
