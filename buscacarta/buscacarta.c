@@ -5,7 +5,7 @@
 //feito pelo daniel
 //exercicio de lab de icc2. tenho um vetor de cartas (são só numeros alias, uso a struct pra facilitar) desorganizado e quero achar uma especifica. pra isso, organizo o vetor e faço uma busca binaria nele
 //depois, tenho que retornar a posição "antiga" da carta no vetor. caso tenha repetição do numero, tenho que printar a primeira ocorrencia dele no vetor original
-//faço esse algoritmo usando quicksort/busca binaria e busca linear simples, aí comparo qual se sai melhor. como extra peguei o radix do fernando e comparei tb
+//faço esse algoritmo usando ((quicksort || raidixsort) && busca binaria) e busca linear simples, aí comparo qual se sai melhor. como extra peguei o radix do fernando e comparei tb
 
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
