@@ -3,10 +3,6 @@
 #include <string.h>
 #define MAX_DESCR 50
 
-/*trabalho de icc2. temos meio que simular um "gerente de processos" de um computador
-tem uns par de detalhe mas fica paia de explicar aqui. so tenha em mente que funcionou 100%
-codigo feito todo pelo kevin. fiz pouquissima coisa so pra passar no runcodes de boa*/
-
 typedef struct horas
 {
     int hh;
@@ -227,7 +223,6 @@ void adiciona(celula* lista_p, celula* lista_t, char *comando, int cont)
     aux.descricao[k] = '\0';
     add_ord_prior(lista_p, cont, aux);
     add_ord_tempo(lista_t, cont, aux);
-
     return;
 }
 
@@ -355,7 +350,10 @@ void retira(celula* lista, int posicao, int cont)
     {
         lista[i-1] = lista[i];
     }
-
+    lista[cont-1].prior = -1;
+    lista[cont-1].chegada.hh = 99;
+    lista[cont-1].chegada.mm = 99;
+    lista[cont-1].chegada.ss = 99;
     return;
 }
 
@@ -363,7 +361,7 @@ void troca_p(celula* lista_p, celula* lista_t, char* comando, int cont)
 {
     int prior1, prior2, n, m;
     horario aux;
-    celula aux1, aux2;
+    celula aux2;
     if(comando[11] < 48 || comando[11] > 57)
     {
         prior1 = comando[10] - 48;
@@ -390,14 +388,12 @@ void troca_p(celula* lista_p, celula* lista_t, char* comando, int cont)
     }
     n = busca_binaria_p(lista_p, cont, prior1);
     aux = lista_p[n].chegada;
-    aux1 = lista_p[n];
     m = busca_binaria_t(lista_t, cont, aux);
     aux2 = lista_t[m];
-    aux1.prior = prior2;
     aux2.prior = prior2;
     retira(lista_p, n, cont);
     retira(lista_t, m, cont);
-    add_ord_prior(lista_p, cont, aux1);
+    add_ord_prior(lista_p, cont, aux2);
     add_ord_tempo(lista_t, cont, aux2);
 
     return;
@@ -407,7 +403,7 @@ void troca_t(celula* lista_t, celula* lista_p, char* comando, int cont)
 {
     int n, m, aux;
     horario aux1, aux2;
-    celula aux1_, aux2_;
+    celula aux2_;
     aux1.hh = (comando[10]-48)*10+comando[11]-48;
     aux1.mm = (comando[13]-48)*10+comando[14]-48;
     aux1.ss = (comando[16]-48)*10+comando[17]-48;
@@ -417,15 +413,12 @@ void troca_t(celula* lista_t, celula* lista_p, char* comando, int cont)
     n = busca_binaria_t(lista_t, cont, aux1);
     aux = lista_t[n].prior;
     m = busca_binaria_p(lista_p, cont, aux);
-    aux1_ = lista_t[n];
     aux2_ = lista_p[m];
-    aux1_.chegada = aux2;
     aux2_.chegada = aux2;
     retira(lista_t, n, cont);
     retira(lista_p, m, cont);
-    add_ord_tempo(lista_t, cont, aux1_);
+    add_ord_tempo(lista_t, cont, aux2_);
     add_ord_prior(lista_p, cont, aux2_);
-
     return;
 }
 

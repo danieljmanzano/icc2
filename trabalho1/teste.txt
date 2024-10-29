@@ -1,0 +1,360 @@
+//Entrada
+add 9 12:02:55 desc1
+add 1 07:23:11 desc2
+add 8 08:11:50 desc3
+add 15 04:22:34 desc4
+add 11 08:11:49 desc5
+add 2 02:01:01 desc6
+print -p
+print -t
+change -p 15|7
+print -p
+exec -p
+print -p
+quit
+
+//Saída
+15 04:22:34 desc4
+11 08:11:49 desc5
+09 12:02:55 desc1
+08 08:11:50 desc3
+02 02:01:01 desc6
+01 07:23:11 desc2
+
+02 02:01:01 desc6
+15 04:22:34 desc4
+01 07:23:11 desc2
+11 08:11:49 desc5
+08 08:11:50 desc3
+09 12:02:55 desc1
+
+11 08:11:49 desc5
+09 12:02:55 desc1
+08 08:11:50 desc3
+07 04:22:34 desc4
+02 02:01:01 desc6
+01 07:23:11 desc2
+
+09 12:02:55 desc1
+08 08:11:50 desc3
+07 04:22:34 desc4
+02 02:01:01 desc6
+01 07:23:11 desc2
+
+-------------------------------------------
+
+//Entrada
+add 9 11:05:41 firefox
+add 14 06:15:02 openoffice
+add 5 05:26:18 xterm
+add 7 10:44:34 emacs
+add 16 05:43:21 gdb
+add 11 22:47:56 garbage-collector
+print -p
+print -t
+quit
+
+//Saída
+16 05:43:21 gdb
+14 06:15:02 openoffice
+11 22:47:56 garbage-collector
+09 11:05:41 firefox
+07 10:44:34 emacs
+05 05:26:18 xterm
+
+05 05:26:18 xterm
+16 05:43:21 gdb
+14 06:15:02 openoffice
+07 10:44:34 emacs
+09 11:05:41 firefox
+11 22:47:56 garbage-collector
+
+-------------------------------------------
+
+//Entrada
+add 8 08:06:09 xfig
+add 12 06:21:59 bash
+add 13 04:11:20 nautilus
+add 6 04:37:34 gnome
+next -p
+next -t
+quit
+
+//Saída
+13 04:11:20 nautilus
+
+13 04:11:20 nautilus
+
+-------------------------------------------
+
+//Entrada
+add 10 03:53:17 gimp
+add 3 07:33:25 printer-deamon
+add 15 04:05:30 music-player
+exec -p
+exec -t
+print -p
+quit
+
+//Saída
+03 07:33:25 printer-deamon
+
+-------------------------------------------
+
+//Entrada
+add 9 06:15:02 openoffice
+add 5 05:26:18 xterm
+add 14 04:11:20 nautilus
+change -p 5|15
+change -t 06:15:02|08:22:50
+print -p
+print -t
+quit
+
+//Saída
+15 05:26:18 xterm
+14 04:11:20 nautilus
+09 08:22:50 openoffice
+
+14 04:11:20 nautilus
+15 05:26:18 xterm
+09 08:22:50 OpenOffice
+
+-------------------------------------------
+
+//Entrada
+add 9 11:05:41 firefox
+add 14 06:15:02 openoffice
+add 5 05:26:18 xterm
+add 7 10:44:34 emacs
+next -p
+exec -p
+next -t
+exec -t
+print -p
+quit
+
+//Saída
+14 06:15:02 openoffice
+
+05 05:26:18 xterm
+
+09 11:05:41 firefox
+07 10:44:34 emacs
+
+-------------------------------------------
+
+//Entrada
+add 10 12:30:45 chrome
+add 15 08:15:00 notepad
+add 5 09:45:30 calc
+add 7 14:50:25 word
+change -t 12:30:45|07:30:45
+print -t
+quit
+
+//Saída
+10 07:30:45 chrome
+15 08:15:00 notepad
+05 09:45:30 calc
+07 14:50:25 word
+
+-------------------------------------------
+
+//Entrada
+add 9 11:05:41 firefox
+add 14 06:15:02 openoffice
+add 5 05:26:18 xterm
+add 7 10:44:34 emacs
+change -p 5|20
+print -p
+quit
+
+//Saída
+20 05:26:18 xterm
+14 06:15:02 openoffice
+09 11:05:41 firefox
+07 10:44:34 emacs
+
+-------------------------------------------
+
+//Entrada
+add 10 08:00:00 text-editor
+add 6 07:30:00 file-manager
+add 12 10:15:00 browser
+add 4 09:45:00 email-client
+print -p
+print -t
+next -p
+next -t
+change -p 6|11
+change -t 09:45:00|06:00:00
+exec -p
+exec -t
+print -p
+print -t
+quit
+
+//Saída
+12 10:15:00 browser
+10 08:00:00 text-editor
+06 07:30:00 file-manager
+04 09:45:00 email-client
+
+06 07:30:00 file-manager
+10 08:00:00 text-editor
+04 09:45:00 email-client
+12 10:15:00 browser
+
+12 10:15:00 browser
+
+06 07:30:00 file-manager
+
+11 07:30:00 file-manager
+10 08:00:00 text-editor
+
+11 07:30:00 file-manager
+10 08:00:00 text-editor
+
+-------------------------------------------
+
+//Entrada
+add 8 09:00:00 music-player
+add 3 08:30:00 editor
+add 5 10:15:00 browser
+add 7 07:45:00 terminal
+add 6 09:30:00 calculator
+print -p
+print -t
+next -p
+next -t
+change -p 8|10
+change -t 08:30:00|06:30:00
+exec -p
+exec -t
+print -p
+print -t
+quit
+
+//Saída
+08 09:00:00 music-player
+07 07:45:00 terminal
+06 09:30:00 calculator
+05 10:15:00 browser
+03 08:30:00 editor
+
+07 07:45:00 terminal
+03 08:30:00 editor
+08 09:00:00 music-player
+06 09:30:00 calculator
+05 10:15:00 browser
+
+08 09:00:00 music-player
+
+07 07:45:00 terminal
+
+07 07:45:00 terminal
+06 09:30:00 calculator
+05 10:15:00 browser
+
+07 07:45:00 terminal
+06 09:30:00 calculator
+05 10:15:00 browser
+
+-------------------------------------------
+
+//Entrada
+add 10 11:00:00 text-editor
+add 3 08:15:00 shell
+add 7 12:45:00 music-player
+add 2 09:10:00 video-player
+add 5 10:30:00 file-manager
+print -p
+print -t
+change -p 3|8
+change -t 09:10:00|07:50:00
+print -p
+print -t
+exec -t
+next -p
+exec -p
+print -p
+print -t
+quit
+
+//Saída
+10 11:00:00 text-editor
+07 12:45:00 music-player
+05 10:30:00 file-manager
+03 08:15:00 shell
+02 09:10:00 video-player
+
+03 08:15:00 shell
+02 09:10:00 video-player
+05 10:30:00 file-manager
+10 11:00:00 text-editor
+07 12:45:00 music-player
+
+10 11:00:00 text-editor
+08 08:15:00 shell
+07 12:45:00 music-player
+05 10:30:00 file-manager
+02 07:50:00 video-player
+
+02 07:50:00 video-player
+08 08:15:00 shell
+05 10:30:00 file-manager
+10 11:00:00 text-editor
+07 12:45:00 music-player
+
+10 11:00:00 text-editor
+
+08 08:15:00 shell
+07 12:45:00 music-player
+05 10:30:00 file-manager
+
+08 08:15:00 shell
+05 10:30:00 file-manager
+07 12:45:00 music-player
+
+-------------------------------------------
+
+//Entrada
+add 4 13:00:00 docs
+add 6 10:45:00 media
+add 1 11:30:00 games
+add 9 09:00:00 mail
+add 2 12:15:00 browser
+print -p
+print -t
+change -t 11:30:00|08:00:00
+change -p 4|10
+exec -t
+next -p
+exec -p
+print -p
+print -t
+quit
+
+//Saída
+09 09:00:00 mail
+06 10:45:00 media
+04 13:00:00 docs
+02 12:15:00 browser
+01 11:30:00 games
+
+09 09:00:00 mail
+06 10:45:00 media
+01 11:30:00 games
+02 12:15:00 browser
+04 13:00:00 docs
+
+10 13:00:00 docs
+
+09 09:00:00 mail
+06 10:45:00 media
+02 12:15:00 browser
+
+09 09:00:00 mail
+06 10:45:00 media
+02 12:15:00 browser
