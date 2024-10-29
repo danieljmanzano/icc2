@@ -3,6 +3,10 @@
 #include <string.h>
 #define MAX_DESCR 50
 
+/*trabalho de icc2. temos meio que simular um "gerente de processos" de um computador
+tem uns par de detalhe mas fica paia de explicar aqui. so tenha em mente que funcionou 100%
+codigo feito todo pelo kevin, todo credito ao nosso amigo abençoado. fiz pouquissima coisa so pra passar no runcodes de boa e pra testar aqui*/
+
 typedef struct horas
 {
     int hh;
