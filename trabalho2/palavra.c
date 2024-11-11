@@ -4,6 +4,7 @@
 #include <string.h>
 
 //feito pelo jhonatan. sabe muito o menino
+//o trabalho teoricamente nao precisa prever entrada mal feita nem dar um suporte pro usuario, mas fiz por vontade de brincar com o negocio aq tb
 
 //enunciado no pdf:
 /*Sua tarefa é implementar um soletra para o terminal que tenha os seguintes comandos:
@@ -27,7 +28,7 @@ entradas serão em letra maiúscula.*/
 #define MAX_TAMANHO_PALAVRA 20  // Tamanho máximo de cada palavra
 
 // Estrutura para armazenar as palavras válidas
-char palavras_validas[MAX_PALAVRAS][MAX_TAMANHO_PALAVRA]; // Grarda as palavras que contenhão as letra obrigatoria e as iniciais 
+char palavras_validas[MAX_PALAVRAS][MAX_TAMANHO_PALAVRA]; // Guarda as palavras que conterão as letra obrigatoria e as iniciais 
 int total_palavras_validas = 0;                           // Quantidade de palavras carregadas 
 int palavras_encontradas[MAX_PALAVRAS] = {0};             // Flag para palavras encontradas (0 não encotrada 1 encotrada)
 
@@ -174,13 +175,16 @@ void solucao() {
 int main() {
     char comando[50];
     char entrada[20];
-    int flag = 0;
-    
+    int flag_erro = 0, flag_inicio = 0; //adiçoes minhas (daniel). nao precisava pra entregar o trabalho, assim como comentei la em cima fiz só pra brincar 
+    printf("bem vindo(a) ao nosso programa de adivinhação de palavras! \npara entender o funcionamento, digite 'ajuda'\npara entender os comandos, digite 'comandos'\n");
+    // ^ adição minha (daniel): só bobeira pra quem quiser brincar com o bixo ^
+
     while (1) {
-        flag = 0;
+        flag_erro = 0;
         scanf("%s", comando);
 
         if (strcmp(comando, "inicio") == 0) {  // Lê a letra obrigatória e as outras letras
+            flag_inicio = 1; //adiçao minha (daniel): quando inicializa ele permite fazer outras coisas; se nao, nao deixa nada
             char letras_ini[7];
             // Lê a letra obrigatória
             scanf(" %c", &obrigatoria);
@@ -193,20 +197,34 @@ int main() {
             
             inicio(obrigatoria, letras_ini);
         } 
-        else if (strcmp(comando, "palavra") == 0) { // Lê a palavra a ser verificada
+        else if (strcmp(comando, "palavra") == 0 && flag_inicio) { // Lê a palavra a ser verificada
             scanf(" %s", entrada);
             palavra(entrada);
         } 
-        else if (strcmp(comando, "progresso") == 0) {
+        else if (strcmp(comando, "progresso") == 0 && flag_inicio) {
             progresso();
         } 
-        else if (strcmp(comando, "solucao") == 0) {
+        else if (strcmp(comando, "solucao") == 0 && flag_inicio) {
             solucao();
             break;
         } 
+        else if (strcmp(comando, "comandos") == 0) { //adiçao minha (daniel): mais bobeira pra deixar ele bonitin de usar
+            printf("comandos do programa:\n");
+            printf("-para inicializar, digite 'inicio' e, em seguida, as 7 letras (em maiúsculo e espaçadas entre si) que podem compor sua palavra\n");
+            printf("-para registrar uma tentativa, digite 'palavra' e, em seguida, sua palavra de tentativa em maiúsculo\n");
+            printf("-para verificar seu progresso no jogo, digite 'progresso'\n");
+            printf("-para finalizar o jogo e obter a resposta, digite 'solucao'\n");
+            continue;
+        }
+        else if (strcmp(comando, "ajuda") == 0) { //adiçao minha (daniel): mais bobeira, denovo
+            printf("nesse programa, seu objetivo é adivinhar todas as palavras que podem ser formadas por certas letras específicas que você, usuário, escolher\n");
+            printf("o programa levará em conta as 7 letras de entrada fornecidas na inicialização e acompanhará seu progresso\n");
+            printf("detalhe importante: a primeira letra da inicialização deve estar obrigatoriamente na sua palavra de tentativa\n");
+            continue;
+        }
         else {
             printf("Comando desconhecido: %s\n", comando);
-            flag = 1; //adição minha (daniel): pra quando o comando é invalido poe a flag aq pra nao printar a mensagem parabens e dar break
+            flag_erro = 1; //adição minha (daniel): pra quando o comando é invalido poe a flag aq pra nao printar a mensagem parabens e dar break
         }
 
         int contA = 0, contB = 0;
@@ -215,10 +233,18 @@ int main() {
             contB += progresso_palavras[j]; 
         }
 
-        if (contA == contB && !flag){
+        if (contA == 0) { //adição minha (daniel): mais bobeira
+            printf("nenhuma palavra válida encontrada com as letras fornecidas\n");
+            break;
+        }
+
+        if (contA == contB && !flag_erro){
             printf("parabens! voce encontrou todas as palavras");
             break;
         }
+
+        if(!flag_inicio) //adiçao minha (daniel): mais bobeira
+            printf("o programa ainda nao foi inicializado! digite 'comandos' para casos de dúvidas do funcionamento do programa\n");
     }
     
     return 0;
