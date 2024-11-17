@@ -20,7 +20,7 @@ void insertionsort(int *vet, int ini, int fim){
     return;
 }
 
-void mergesort(int *v, int i, int f, int k){ //o v2 é só um auxiliar que vou usar pro merge, pode ignorar aqui por enquanto
+void mergesort(int *v, int i, int f, int k){ 
     if(f - i <= k){ //quando o tamanho do vetor divido for k eu chamo o insertion
         insertionsort(v, i, f);
         printa(v, i, f); //toda vez que chamo o insertion eu printo as coisas que ordenei no momento

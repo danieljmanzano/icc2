@@ -15,4 +15,7 @@
     void printatabela(TABELA *t);
     int msc(TABELA *t);
 
+    int sort(const void *a, const void *b);
+    int maximaSubsequenciaSort(int arr[], int tam);
+
 #endif

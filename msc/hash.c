@@ -147,3 +147,30 @@ int msc(TABELA *t){ //maior subsequencia crescente
     free(vet);
     return maiorsubseq;
 }
+
+
+/*aqui pra baixo é o algoritmo pra comparar com o hashmap. fernando que fez*/
+
+int sort(const void *a, const void *b) { return *(int *)a - *(int *)b; }
+
+int maximaSubsequenciaSort(int arr[], int tam) {
+  if (tam == 0)
+    return 0;
+
+  qsort(arr, tam, sizeof(int), sort);
+
+  int maxSequencia = 1;
+  int sequenciaAtual = 1;
+
+  for (int i = 1; i < tam; i++) {
+    if (arr[i] == arr[i - 1] + 1) {
+      sequenciaAtual++;
+    } else {
+      maxSequencia =
+          maxSequencia >= sequenciaAtual ? maxSequencia : sequenciaAtual;
+      sequenciaAtual = 1;
+    }
+  }
+  return maxSequencia =
+             maxSequencia >= sequenciaAtual ? maxSequencia : sequenciaAtual;
+}
