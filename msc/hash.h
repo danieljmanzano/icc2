@@ -2,8 +2,6 @@
     #define OIE
 
     #define TAM 1000 //tamanho maximo da tabela
-    #define VAZIO -123192 //coloquei qualquer numero grandao negativo. só pra tratar de posiçoes vazias da tabela 
-
 
     typedef struct no_ NO;
     typedef struct tabela_ TABELA;

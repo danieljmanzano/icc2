@@ -6,7 +6,7 @@
 //exercicio de lab de icc2. 
 //temos que comparar duas implementaçoes diferentes de algoritmos que veem a maxima subsequencia crescente de um vetor (que tem uma funçao hash envolvida)
 //fiz um usando tabela hash e o fernando fez logo os dois que precisava no problema
-//aqui eu comparo o que nao usa hash dele com o meu. no msc.c eu comparo as duas implementaçao dele mesmo
+//aqui eu comparo o que nao usa hash dele (so ordenaçao) com o meu de hash. no msc.c eu comparo as duas implementaçao dele mesmo
 
 /*daqui pra baixo é pra funcionar o timer*/
 // Struct para o funcionamento do timer
@@ -43,19 +43,21 @@ int main(void){
         vet[i] = valor;
         insere(t, valor);
     }
+    
 
     printf("numero de entradas: %d\n", n);
 
-    /*pra testar com hashmap*/
+    //pra testar com hashmap
     start_timer(&timer1);
     printf("execuçao por hashmap: ");
     msc(t);
     imprimeTempoDeExecucao(stop_timer(&timer1));
 
-    /*pra testar o algoritmo do fernando*/
+    //pra testar o algoritmo do fernando
     start_timer(&timer2);
     printf("execuçao por ordenaçao: ");
     maximaSubsequenciaSort(vet, n);
     imprimeTempoDeExecucao(stop_timer(&timer2));
+    
     return 0;
 }

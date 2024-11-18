@@ -22,8 +22,8 @@ TABELA *inicializa(){
 
     for(int i = 0; i < TAM; i++){ //inicializar os nós da tabela
         t->tabela[i] = malloc(sizeof(NO));
-        t->tabela[i]->num = VAZIO;
-        t->tabela[i]->prox = NULL;
+        /*t->tabela[i]->num = VAZIO;*/
+        t->tabela[i] = NULL;
     }
 
     t->tam = 0;
@@ -31,24 +31,13 @@ TABELA *inicializa(){
 }
 
 void insere(TABELA *t, int valor){
-    int num = t->tabela[hash(valor)]->num; //pego o que tem na tabela na posiçao que quero inserir
+    NO *no = malloc(sizeof(NO));
+    if(!no) return;
 
-    if(num == VAZIO){
-        t->tabela[hash(valor)]->num = valor; //caso a posiçao esteja vazia eu só coloco ali
-        t->tam++;
-        return;
-    }else{
-        NO *aux = t->tabela[hash(valor)];
-        while(aux->prox != NULL) //vou procurar a primeira posição vazia para aquela posiçao da tabela
-            aux = aux->prox; //quando sair daqui, tenho que inserir meu numero no aux->prox (ta apontando pra null, ta vazio)
-
-        aux->prox = malloc(sizeof(NO)); //aloco o proximo
-        aux = aux->prox; //ando pra frente
-        aux->num = valor; //guarda o numero
-        aux->prox = NULL; //poe o proximo nulo, pode receber algum numero depois
-        t->tam++;
-        return;
-    }
+    no->num = valor;
+    no->prox = t->tabela[hash(valor)];
+    t->tabela[hash(valor)] = no;
+    t->tam++;
 
     return; //pra evitar warning
 }
@@ -71,7 +60,7 @@ void printatabela(TABELA *t){
     NO *aux;
 
     for(int i = 0; i < TAM; i++){
-        if(t->tabela[i]->num != VAZIO){ //caso tenha algo ali tenho que printar
+        if(t->tabela[i] != NULL){
             printf("%d ", t->tabela[i]->num);
 
             aux = t->tabela[i];
@@ -82,6 +71,7 @@ void printatabela(TABELA *t){
         }
     }
 
+    printf("\n");
     return;
 }
 
@@ -112,7 +102,7 @@ int msc(TABELA *t){ //maior subsequencia crescente
 
     for (int i = 0; i < TAM; i++){ //pega os numeros da tabela e poe no vetor
         NO *aux = t->tabela[i];
-        while(aux != NULL && aux->num != VAZIO){
+        while(aux != NULL){
             vet[index++] = aux->num;
             aux = aux->prox;
         }
